@@ -5,6 +5,7 @@ load_dotenv()
 
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
+from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
 from core.aptos import get_tx_by_version, ask_question
 import logging.config
@@ -22,6 +23,16 @@ def initialize_logging(level=logging.INFO):
 
 
 app = FastAPI()
+
+# allow CORS
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/", status_code=200)
