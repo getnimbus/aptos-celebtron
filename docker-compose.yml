@@ -3,6 +3,7 @@ services:
   app:
     container_name: "aptos-celebtron"
     image: "aptos-celebtron"
+    platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile
