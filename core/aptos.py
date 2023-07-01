@@ -89,7 +89,7 @@ app.add("web_page", "https://aptos.dev/concepts/txns-states")
 
 if __name__ == "__main__":
     # AirdropEvent
-    # https://explorer.aptoslabs.com/txn/169470665/events?network=mainnet
+    # https://explorer.aptoslabs.com/txn/169470665?network=mainnet
     # tx = get_tx_by_version("169470665")
 
     # TransferEvent
@@ -97,20 +97,22 @@ if __name__ == "__main__":
     # tx = get_tx_by_version("169646501")
 
     # SwapEvent
-    # https://explorer.aptoslabs.com/txn/169674936/events?network=mainnet
+    # https://explorer.aptoslabs.com/txn/169674936?network=mainnet
     # tx = get_tx_by_version("169674936")
 
     # SwapEvent USDC
-    # https://explorer.aptoslabs.com/txn/169707501/events?network=mainnet
+    # https://explorer.aptoslabs.com/txn/169707501?network=mainnet
     tx = get_tx_by_version("169707501")
 
     # LiqudityAddedEvent
-    # https://explorer.aptoslabs.com/txn/169707427/events?network=mainnet
+    # https://explorer.aptoslabs.com/txn/169707427?network=mainnet
     # tx = get_tx_by_version("169707427")
 
+    # debugging tx info
     print(tx)
     print(type(tx))
 
+    # tx explanation
     input_query = f"Explain this transaction: {tx}"
     answer = ask_question(input_query)
     print(answer)
