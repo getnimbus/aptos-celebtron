@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  app:
+    container_name: "aptos-celebtron"
+    image: "aptos-celebtron"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - aptos-celebtron-data:/db
+    env_file:
+      - .env
+
+volumes:
+  aptos-celebtron-data:
