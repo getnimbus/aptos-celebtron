@@ -42,3 +42,9 @@ export OPENAI_API_KEY=<your-openai-api-key>
 ```bash
 python server.py
 ```
+
+## References
+
+- https://aptos.dev/concepts/
+- https://fullnode.devnet.aptoslabs.com/v1/spec#/
+- https://explorer.aptoslabs.com/
