@@ -19,12 +19,13 @@ def get_tx_by_version(version_id: str) -> dict:
         if response.status_code == 200:
             json_data = response.json()
             return {
-                "transaction_fee": str(Decimal(json_data["gas_used"]) * Decimal(json_data["gas_unit_price"]) / 10 ** 8),
+                "transaction_fee": f'{str(Decimal(json_data["gas_used"]) * Decimal(json_data["gas_unit_price"]) / 10 ** 8)} APT',
                 "success": json_data["success"],
                 "vm_status": json_data["vm_status"],
                 "sender": json_data["sender"],
                 "events": json_data["events"],
-                "timestamp": datetime.fromtimestamp(int(json_data["timestamp"]) / 1000000.0),
+                "timestamp": datetime.utcfromtimestamp(int(json_data["timestamp"]) / 1000000.0).strftime(
+                    "%Y-%m-%dT%H:%M:%SZ"),
                 "type": json_data["type"],
             }
         else:
@@ -110,7 +111,6 @@ if __name__ == "__main__":
 
     # debugging tx info
     print(tx)
-    print(type(tx))
 
     # tx explanation
     input_query = f"Explain this transaction: {tx}"

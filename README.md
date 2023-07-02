@@ -3,7 +3,7 @@
 Celebtron explain the transaction of Aptos chain.
 
 **Production Support**: In this version, we currently support explain 4 types of transaction. With other transaction
-types haven't been tested yet but only development phase:
+types haven't been tested yet but only in development phase:
 
 - TransferEvent
     + https://explorer.aptoslabs.com/txn/169646501?network=mainnet
