@@ -2,8 +2,9 @@
 
 Celebtron explain the transaction of Aptos chain.
 
-**Production Support**: In this version, we currently support explain 4 types of transaction. With other transaction
-types haven't been tested yet but only in development phase:
+## Production Support:
+
+In this version, we support explain 4 types of transaction below.
 
 - TransferEvent
     + https://explorer.aptoslabs.com/txn/169646501?network=mainnet
@@ -13,6 +14,9 @@ types haven't been tested yet but only in development phase:
     + https://explorer.aptoslabs.com/txn/169707501?network=mainnet
 - LiqudityAddedEvent
     + https://explorer.aptoslabs.com/txn/169707427?network=mainnet
+
+**Disclaimer**: For other transaction
+types are working right now but we haven't tested yet. This is still in development phase.
 
 ## Prequisites
 
