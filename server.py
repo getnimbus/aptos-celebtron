@@ -11,7 +11,7 @@ from slowapi.util import get_remote_address
 from slowapi.middleware import SlowAPIMiddleware
 from slowapi.errors import RateLimitExceeded
 from datetime import datetime
-from core.aptos import get_tx_by_version, ask_question
+from core.aptos import get_tx_by_version, get_tx_by_hash, ask_question
 import logging.config
 
 
@@ -52,9 +52,18 @@ async def get_healthcheck():
     return {"message": "ok", "data": f"Hello world from server, current server time is {current_time}"}
 
 
-@app.get("/api/v1/tx_explain/{version_id}", status_code=200)
+@app.get("/api/v1/tx_explain/by_version/{version_id}", status_code=200)
 async def get_tx_explain(version_id: str):
     tx = get_tx_by_version(version_id)
+    input_query = f"Explain this transaction: {tx}"
+    answer = ask_question(input_query)
+    return {"message": "ok", "data": answer}
+
+
+@app.get("/api/v1/tx_explain/by_hash/{tx_hash}", status_code=200)
+async def get_tx_hash(tx_hash: str):
+    tx = get_tx_by_hash(tx_hash)
+    print(tx)
     input_query = f"Explain this transaction: {tx}"
     answer = ask_question(input_query)
     return {"message": "ok", "data": answer}

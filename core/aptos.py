@@ -32,7 +32,35 @@ def get_tx_by_version(version_id: str) -> dict:
             logger.error("Request failed with status code", response.status_code)
             return None
     except Exception as e:
-        logger.errror(e)
+        logger.error(e)
+        return None
+
+
+def get_tx_by_hash(tx_hash: str) -> dict:
+    try:
+        url = f"https://fullnode.devnet.aptoslabs.com/v1/transactions/by_hash/{tx_hash}"
+        headers = {
+            "Accept": "application/json",
+        }
+        response = requests.get(url, headers=headers)
+
+        if response.status_code == 200:
+            json_data = response.json()
+            return {
+                "transaction_fee": f'{str(Decimal(json_data["gas_used"]) * Decimal(json_data["gas_unit_price"]) / 10 ** 8)} APT',
+                "success": json_data["success"],
+                "vm_status": json_data["vm_status"],
+                "sender": json_data["sender"],
+                "events": json_data["events"],
+                "timestamp": datetime.utcfromtimestamp(int(json_data["timestamp"]) / 1000000.0).strftime(
+                    "%Y-%m-%dT%H:%M:%SZ"),
+                "type": json_data["type"],
+            }
+        else:
+            logger.error("Request failed with status code", response.status_code)
+            return None
+    except Exception as e:
+        logger.error(e)
         return None
 
 
