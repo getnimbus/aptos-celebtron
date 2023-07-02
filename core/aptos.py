@@ -29,7 +29,7 @@ def get_tx_by_version(version_id: str) -> dict:
                 "type": json_data["type"],
             }
         else:
-            logger.error("Request failed with status code", response.status_code)
+            logger.error("Request failed with status code %d", response.status_code)
             return None
     except Exception as e:
         logger.error(e)
@@ -57,7 +57,7 @@ def get_tx_by_hash(tx_hash: str) -> dict:
                 "type": json_data["type"],
             }
         else:
-            logger.error("Request failed with status code", response.status_code)
+            logger.error("Request failed with status code %d", response.status_code)
             return None
     except Exception as e:
         logger.error(e)

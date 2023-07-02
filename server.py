@@ -3,9 +3,11 @@ from dotenv import load_dotenv
 # load environment variables from .env file
 load_dotenv()
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.requests import Request
+from starlette.responses import Response
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.middleware import SlowAPIMiddleware
@@ -45,6 +47,17 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(SlowAPIMiddleware)
 
 
+async def catch_exceptions_middleware(request: Request, call_next):
+    try:
+        return await call_next(request)
+    except Exception as e:
+        logging.error(e)
+        return Response("Internal server error", status_code=500)
+
+
+app.middleware("http")(catch_exceptions_middleware)
+
+
 @app.get("/", status_code=200)
 @limiter.exempt
 async def get_healthcheck():
@@ -55,6 +68,8 @@ async def get_healthcheck():
 @app.get("/api/v1/tx_explain/by_version/{version_id}", status_code=200)
 async def get_tx_explain(version_id: str):
     tx = get_tx_by_version(version_id)
+    if tx is None:
+        raise HTTPException(status_code=404, detail="Transaction not found")
     input_query = f"Explain this transaction: {tx}"
     answer = ask_question(input_query)
     return {"message": "ok", "data": answer}
@@ -63,7 +78,8 @@ async def get_tx_explain(version_id: str):
 @app.get("/api/v1/tx_explain/by_hash/{tx_hash}", status_code=200)
 async def get_tx_hash(tx_hash: str):
     tx = get_tx_by_hash(tx_hash)
-    print(tx)
+    if tx is None:
+        raise HTTPException(status_code=404, detail="Transaction not found")
     input_query = f"Explain this transaction: {tx}"
     answer = ask_question(input_query)
     return {"message": "ok", "data": answer}
