@@ -38,7 +38,7 @@ def get_tx_by_version(version_id: str) -> dict:
 
 def get_tx_by_hash(tx_hash: str) -> dict:
     try:
-        url = f"https://fullnode.devnet.aptoslabs.com/v1/transactions/by_hash/{tx_hash}"
+        url = f"https://fullnode.mainnet.aptoslabs.com/v1/transactions/by_hash/{tx_hash}"
         headers = {
             "Accept": "application/json",
         }
