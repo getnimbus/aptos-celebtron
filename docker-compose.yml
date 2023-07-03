@@ -4,11 +4,17 @@ services:
     container_name: "aptos-celebtron"
     image: "aptos-celebtron"
     platform: linux/amd64
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
+    logging:
+      driver: json-file
+      options:
+        max-size: "15m"
+        max-file: "3"
     volumes:
       - aptos-celebtron-data:/db
     env_file:
